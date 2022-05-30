@@ -4,6 +4,7 @@ var timerE1 = document.querySelector("#timer");
 var score=0;
 var timer=30;
 var questionCount=0;
+var hs=[];
 
 // the question object is used to contain the information to create a question along with the correct option
 // the C stands for correct, X for incorrect.
@@ -87,9 +88,9 @@ console.log(toDelete);
 toDelete.remove();
 };
 deleteQuestion=function(){
-    var toDelete = document.querySelector(".question");
-    console.log(toDelete);
-    toDelete.remove();
+    var questionDelete = document.querySelector(".Question");
+    console.log(questionDelete);
+    questionDelete.remove();
     };
 var startGame=function(){
 deleteStart();
@@ -115,7 +116,7 @@ if (timer<=0){
 
 var checkAnswer=function(event){
     
-    
+        questionCount++;
 
         
         //if (event.)
@@ -129,6 +130,10 @@ var checkAnswer=function(event){
             score+=1;
             console.log(score);
             deleteQuestion();
+            if(questionCount<Questions.length){
+            createQuestions(Questions[questionCount]);
+            }
+            else{endGame();}
         }
         else{
             window.alert("Incorrect -5 seconds off your time");
@@ -136,18 +141,101 @@ var checkAnswer=function(event){
             timer-=5;
             timerE1.innerHTML="<h3>"+timer+"</h3>";
             deleteQuestion();
-
+            if(questionCount<Questions.length){
+                createQuestions(Questions[questionCount]);
+                }
+                else{endGame();}
         }
     };
 
+
+
 var timeChange=function(){
+if(timer<=0){
+    timer=30;
+    alert("Out of Time!");
+    endGame();
+}
 console.log("timer entered")
 
 timerE1.innerHTML="<h3>"+timer+"</h3>";
 timer--;
 
 };
+var endGame=function(){
+
+var highScore=document.createElement("div");
+var highScoreH2=document.createElement("h2");
+highScoreH2.innerHTML="<h2 id='high-score>High Score"
+var userName=document.createElement("form")
+userName.innerHTML=
+"<input type='text' id='form-user' name='user-name placeholder='enter your name'/>"
+var userButton=document.createElement("Button");
+userButton.innerHTML="<button id='save' type='submit>Save</button>"
+var saveID=userName.innerText;
+userName.appendChild(userButton);
+console.log(saveID);
+userName.setAttribute("id",saveID);
+
+highScore.appendChild(userName);
+
+document.body.appendChild(highScore);
+loadHS();
 
 
 
-startButton.addEventListener("click", startGame);
+
+addEventListener("submit",handleSubmit);
+
+};
+
+var handleSubmit =function(){
+    var nameValue = document.getElementById("form-user").value;
+    var hsObj={
+        bestScore:score,
+        name:nameValue,
+        
+    
+    }
+    console.log(hsObj);
+
+    hs.push(hsObj);
+    saveHS()
+    createHS(hsObj);
+
+}
+
+var createHS=function(obj){
+var elem=document.createElement("div")
+elem.innerHTML="<h4 id='"+obj.nameValue+"'>Score of: "+obj.bestScore+"by "+obj.name+"</h4>";
+document.body.appendChild(elem);
+};
+
+var saveHS = function() {
+    localStorage.setItem("HS", JSON.stringify(hs));
+  };
+  
+
+var loadHS = function() {
+    var savedHS = localStorage.getItem("HS");
+    // if there are no tasks, set tasks to an empty array and return out of the function
+    if (!savedHS) {
+      return false;
+    }
+    console.log("HS Found");
+    // else, load up saved tasks
+  
+    // parse into array of objects
+    savedHS = JSON.parse(savedHS);
+  
+    // loop through savedTasks array
+    for (var i = 0; i < savedHS; i++) {
+      // pass each task object into the `createTaskEl()` function
+      createHS(savedHS[i]);
+    }
+  };
+
+
+
+//startButton.addEventListener("click", startGame);
+endGame();
