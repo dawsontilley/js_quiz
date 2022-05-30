@@ -1,0 +1,19 @@
+*{
+background-color:blueviolet;
+color: aliceblue;
+}
+header{
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    justify-content: space-between;
+}
+header h1{
+    display: inline;
+}
+
+header .timer{
+    display: inline;
+    text-align: center;
+    
+}
