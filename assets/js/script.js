@@ -191,7 +191,7 @@ if(timer<=0){
     alert("Out of Time!");
     endGame();
 }
-console.log("timer entered")
+//console.log("timer entered")
 
 timerE1.innerHTML="<h3>"+timer+"</h3>";
 timer--;
@@ -267,7 +267,7 @@ var createStartAgain=function(){
     var startagain= document.createElement("div");
     startagain.innerHTML="<div class='start-btn'><h2>Click Here to Try Again!</h2><button class='btn' id='start-game'>Start</button>";
     document.body.appendChild(startagain);
-    var startAgainButton = document.querySelector("start-game");
+    var startAgainButton = document.querySelector("#start-game");
     startAgainButton.addEventListener("click",startGame);
 }
 
@@ -288,10 +288,11 @@ var loadHS = function() {
   
     // parse into array of objects
     var saved = JSON.parse(savedHS);
-    console.log(saved);
+    console.log("what we found in memory"+saved);
     // loop through savedTasks array
-    for (var i = 0; i < saved; i++) {
+    for (var i = 0; i < saved.length; i++) {
       // pass each task object into the `createTaskEl()` function
+      console.log(saved[i]);
       createHS(saved[i]);
       console.log(i+"loop of saved");
     }
@@ -303,5 +304,6 @@ testobj={
 
 }*/
 //createHS(testobj);
+//loadHS();
 startButton.addEventListener("click", startGame);
 //endGame();
