@@ -1,19 +1,60 @@
 *{
-background-color:blueviolet;
-color: aliceblue;
+background-color:beige;
+color: goldenrod;
+align-items: center;
+justify-content: center;
+text-align: center;
 }
+button{
+    background-color: grey;
+    color: white;
+}
+
 header{
     display: flex;
     flex-wrap: wrap;
     text-align: center;
-    justify-content: space-between;
+    
 }
 header h1{
-    display: inline;
+    width: 100%;
 }
 
 header .timer{
-    display: inline;
-    text-align: center;
     
+    text-align: center;
+    width: 100%;
+    justify-content: center;
+}
+main{
+    align-items: center;
+    margin-top:30px;
+}
+
+
+form {
+    justify-content: center;
+    align-items: center;
+}
+
+#timer{
+    font-size: 30px;
+    border-radius: 5px;
+    border-color:aqua;
+}
+
+.option{
+    background-color:darkblue;
+    border-radius: 5px;
+    font:bold;
+    justify-content: center;
+    border-width: 5px;
+    margin-top: 5px;
+    
+    height: 40px;
+
+}
+
+#btn{
+    font-size: 30px;
 }

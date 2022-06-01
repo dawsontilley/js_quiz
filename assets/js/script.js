@@ -41,7 +41,43 @@ var Question3={
     O3:"The start of the body",
     O4:"a meta tag",
 };
-var Questions = [Question1,Question2,Question3];
+
+var Question4={
+    Q:"What library allows for quick access of DOM elements with ${}",
+    A1:"X",
+    A2:"C",
+    A3:"X",
+    A4:"X",
+    O1:"React",
+    O2:"jQuery",
+    O3:"Angular",
+    O4:"HTML",
+};
+
+var Question5={
+    Q:"What can be used to add an element on to an array ",
+    A1:"X",
+    A2:"X",
+    A3:"X",
+    A4:"C",
+    O1:"insert()",
+    O2:".pop",
+    O3:".addArray",
+    O4:".push",
+};
+var Question6={
+    Q:"What can be used to add an element on to an array ",
+    A1:"X",
+    A2:"X",
+    A3:"X",
+    A4:"C",
+    O1:"insert()",
+    O2:".pop",
+    O3:".addArray",
+    O4:".push",
+};
+
+var Questions = [Question1,Question2,Question3,Question4,Question5,Question6];
 
 // this creates the question 
 var createQuestions=function(Question){
@@ -120,15 +156,15 @@ var checkAnswer=function(event){
 
         
         //if (event.)
-        console.log(event.target);
+        //console.log(event.target);
         var clickID= event.target.getAttribute("data-answer");
-        console.log(clickID);
-        console.log(clickID);
+        //console.log(clickID);
+        //console.log(clickID);
         var clickedId = event.target.getAttribute("id");
         if (clickID=="C"){
             window.alert("Correct! +1 to your score.");
             score+=1;
-            console.log(score);
+            //console.log(score);
             deleteQuestion();
             if(questionCount<Questions.length){
             createQuestions(Questions[questionCount]);
@@ -137,7 +173,7 @@ var checkAnswer=function(event){
         }
         else{
             window.alert("Incorrect -5 seconds off your time");
-            console.log(timer);
+            //console.log(timer);
             timer-=5;
             timerE1.innerHTML="<h3>"+timer+"</h3>";
             deleteQuestion();
@@ -152,7 +188,6 @@ var checkAnswer=function(event){
 
 var timeChange=function(){
 if(timer<=0){
-    timer=30;
     alert("Out of Time!");
     endGame();
 }
@@ -163,24 +198,32 @@ timer--;
 
 };
 var endGame=function(){
+timer=0;
+var temp= document.querySelector(".Question");
+if(temp){
+    deleteQuestion();
+}
+clearInterval(myInterval);
 
 var highScore=document.createElement("div");
 var highScoreH2=document.createElement("h2");
-highScoreH2.innerHTML="<h2 id='high-score>High Score"
+highScoreH2.innerHTML="<h2 id='high-score'>High Score</h2>";
 var userName=document.createElement("form")
+userName.setAttribute("id","hs-form");
+loadHS();
 userName.innerHTML=
 "<input type='text' id='form-user' name='user-name placeholder='enter your name'/>"
 var userButton=document.createElement("Button");
-userButton.innerHTML="<button id='save' type='submit>Save</button>"
+userButton.innerHTML="<button id='save' type='button'>Save</button>"
 var saveID=userName.innerText;
 userName.appendChild(userButton);
 console.log(saveID);
-userName.setAttribute("id",saveID);
+//userName.setAttribute("id",saveID);
 
-highScore.appendChild(userName);
-
+highScoreH2.appendChild(userName);
+highScore.appendChild(highScoreH2);
 document.body.appendChild(highScore);
-loadHS();
+
 
 
 
@@ -189,29 +232,47 @@ addEventListener("submit",handleSubmit);
 
 };
 
-var handleSubmit =function(){
+var handleSubmit =function(e){
+    e.preventDefault();
     var nameValue = document.getElementById("form-user").value;
     var hsObj={
         bestScore:score,
         name:nameValue,
         
     
-    }
+    };
     console.log(hsObj);
-
-    hs.push(hsObj);
-    saveHS()
     createHS(hsObj);
+    hs.push(hsObj);
+    saveHS();
+    deleteForm();
+    return false;
+    
+    
 
 }
+var deleteForm=function(){
+var form=document.querySelector("#hs-form");
+form.remove();
+createStartAgain();
+};
 
 var createHS=function(obj){
 var elem=document.createElement("div")
-elem.innerHTML="<h4 id='"+obj.nameValue+"'>Score of: "+obj.bestScore+"by "+obj.name+"</h4>";
+elem.innerHTML="<h4 id='"+obj.nameValue+"'>Score of: "+obj.bestScore+" by "+obj.name+"</h4>";
 document.body.appendChild(elem);
+return false;
 };
+var createStartAgain=function(){
+    var startagain= document.createElement("div");
+    startagain.innerHTML="<div class='start-btn'><h2>Click Here to Try Again!</h2><button class='btn' id='start-game'>Start</button>";
+    document.body.appendChild(startagain);
+    var startAgainButton = document.querySelector("start-game");
+    startAgainButton.addEventListener("click",startGame);
+}
 
 var saveHS = function() {
+    console.log("in save function");
     localStorage.setItem("HS", JSON.stringify(hs));
   };
   
@@ -226,16 +287,21 @@ var loadHS = function() {
     // else, load up saved tasks
   
     // parse into array of objects
-    savedHS = JSON.parse(savedHS);
-  
+    var saved = JSON.parse(savedHS);
+    console.log(saved);
     // loop through savedTasks array
-    for (var i = 0; i < savedHS; i++) {
+    for (var i = 0; i < saved; i++) {
       // pass each task object into the `createTaskEl()` function
-      createHS(savedHS[i]);
+      createHS(saved[i]);
+      console.log(i+"loop of saved");
     }
   };
+/*
+testobj={
+    bestScore:3,
+    name:"George",
 
-
-
-//startButton.addEventListener("click", startGame);
-endGame();
+}*/
+//createHS(testobj);
+startButton.addEventListener("click", startGame);
+//endGame();
