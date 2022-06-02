@@ -94,24 +94,24 @@ var createQuestions=function(Question){
     var answer1=document.createElement("li");
     answer1.innerHTML =
     "<button data-answer='"+Question.A1+"'id='O1' class='option'>" + Question.O1 + "</button>";
-    //answer1.setAttribute("data-answer",Question.A1);
+    
     answers.appendChild(answer1);
     
     var answer2=document.createElement("li");
     answer2.innerHTML =
     "<button data-answer='"+Question.A2+"'id='O2' class='option'>" + Question.O2 + "</button>";
-    //answer2.setAttribute("data-answer",Question.A2);
+    
     answers.appendChild(answer2);
     
     var answer3=document.createElement("li");
     answer3.innerHTML =
     "<button data-answer='"+Question.A3+"'id='O3' class='option'>" + Question.O3 + "</button>";
-    //answer3.setAttribute("data-answer",Question.A3);
+    
     answers.appendChild(answer3);
     var answer4=document.createElement("li");
     answer4.innerHTML =
     "<button data-answer='"+Question.A4+"'id='O4' class='option'>" + Question.O4 + "</button>";
-    //answer4.setAttribute("data-answer",Question.A4);
+   
     answers.appendChild(answer4);
     questionE1.appendChild(answers);
     answers.addEventListener("click",checkAnswer);
@@ -143,7 +143,7 @@ item.remove();
 }
 };
 
-//divsDel.remove();
+
 };
 // this function calls the start game functione except it resets articles to not cause errors.
 var restart= function(){
@@ -177,9 +177,7 @@ if (timer<=0){
         createQuestions(Questions[questionCount]);
     }
 
-//while (timer<0){
- //   setTimer();
-//}
+
 
 
 
@@ -190,16 +188,12 @@ var checkAnswer=function(event){
         questionCount++;
 
         
-        //if (event.)
-        //console.log(event.target);
+      
         var clickID= event.target.getAttribute("data-answer");
-        //console.log(clickID);
-        //console.log(clickID);
         var clickedId = event.target.getAttribute("id");
         if (clickID=="C"){
             window.alert("Correct! +1 to your score.");
             score+=1;
-            //console.log(score);
             deleteQuestion();
             if(questionCount<Questions.length){
             createQuestions(Questions[questionCount]);
@@ -208,7 +202,6 @@ var checkAnswer=function(event){
         }
         else{
             window.alert("Incorrect -5 seconds off your time");
-            //console.log(timer);
             timer-=5;
             timerE1.innerHTML="<h3>"+timer+"</h3>";
             deleteQuestion();
@@ -226,7 +219,6 @@ if(timer<=0){
     alert("Out of Time!");
     endGame();
 }
-//console.log("timer entered")
 
 timerE1.innerHTML="<h3>"+timer+"</h3>";
 timer--;
@@ -259,7 +251,6 @@ userButton.innerHTML="<button id='save' type='button'>Save</button>"
 var saveID=userName.innerText;
 userName.appendChild(userButton);
 console.log(saveID);
-//userName.setAttribute("id",saveID);
 document.body.appendChild(highScoreH2);
 loadHS();
 enterScore.appendChild(userName);
