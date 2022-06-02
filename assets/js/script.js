@@ -123,16 +123,49 @@ var toDelete = document.querySelector(".start-btn");
 console.log(toDelete);
 toDelete.remove();
 };
+// this deletes the high score html to just show the quiz again.
 deleteQuestion=function(){
     var questionDelete = document.querySelector(".Question");
     console.log(questionDelete);
     questionDelete.remove();
     };
+var deleteScore=function(){
+var divsDel=document.querySelectorAll("div");
+var h2rem=document.querySelector("#high-score");
+h2rem.remove();
+console.log(divsDel)
+divsDel.forEach(deleteHTML);
+function deleteHTML (item){
+if (item.id!="timer"){
+item.remove();
+}
+};
+
+//divsDel.remove();
+};
+// this function calls the start game functione except it resets articles to not cause errors.
+var restart= function(){
+    console.log("restarted");
+    deleteScore();
+    
+    timer=30;
+    questionCount=0;
+    myInterval=setInterval(timeChange,1000);
+    if (timer<=0){
+        clearInterval(myInterval);
+    }
+    
+        if (timer>0){
+            createQuestions(Questions[questionCount]);
+        }
+};
+
+// called by button, deletes input for, sets timer and creates questions.
 var startGame=function(){
 deleteStart();
 //createQuestions(Questions);
 console.log("button clicked")
-
+timer=30;
 myInterval=setInterval(timeChange,1000);
 if (timer<=0){
     clearInterval(myInterval);
@@ -149,7 +182,7 @@ if (timer<=0){
 
 
 };
-
+// this checks of the clicked option is correct.
 var checkAnswer=function(event){
     
         questionCount++;
@@ -185,7 +218,7 @@ var checkAnswer=function(event){
     };
 
 
-
+// this handles the timer and is called by setInterval every second.
 var timeChange=function(){
 if(timer<=0){
     alert("Out of Time!");
@@ -197,8 +230,11 @@ timerE1.innerHTML="<h3>"+timer+"</h3>";
 timer--;
 
 };
+// called once timer hits zero or questions finished, allows for entering score.
 var endGame=function(){
-timer=0;
+var timer= document.querySelector("#timer");
+timer.value="0";
+
 var temp= document.querySelector(".Question");
 if(temp){
     deleteQuestion();
@@ -207,10 +243,13 @@ clearInterval(myInterval);
 
 var highScore=document.createElement("div");
 var highScoreH2=document.createElement("h2");
-highScoreH2.innerHTML="<h2 id='high-score'>High Score</h2>";
+highScoreH2.innerHTML="<h2 id='high-score'>Previous Scores:</h2>";
+
+var enterScore=document.createElement("h2");
+enterScore.innerHTML="<h2>Enter your Name Below!</h2>";
 var userName=document.createElement("form")
 userName.setAttribute("id","hs-form");
-loadHS();
+
 userName.innerHTML=
 "<input type='text' id='form-user' name='user-name placeholder='enter your name'/>"
 var userButton=document.createElement("Button");
@@ -219,9 +258,10 @@ var saveID=userName.innerText;
 userName.appendChild(userButton);
 console.log(saveID);
 //userName.setAttribute("id",saveID);
-
-highScoreH2.appendChild(userName);
-highScore.appendChild(highScoreH2);
+document.body.appendChild(highScoreH2);
+loadHS();
+enterScore.appendChild(userName);
+highScore.appendChild(enterScore);
 document.body.appendChild(highScore);
 
 
@@ -232,6 +272,8 @@ addEventListener("submit",handleSubmit);
 
 };
 
+
+// this handles the submit on the name for score.
 var handleSubmit =function(e){
     e.preventDefault();
     var nameValue = document.getElementById("form-user").value;
@@ -251,59 +293,54 @@ var handleSubmit =function(e){
     
 
 }
+// handles deleting the form once it is saved.
 var deleteForm=function(){
 var form=document.querySelector("#hs-form");
 form.remove();
 createStartAgain();
 };
-
+// creates new high scores as well as those from memory.
 var createHS=function(obj){
 var elem=document.createElement("div")
 elem.innerHTML="<h4 id='"+obj.nameValue+"'>Score of: "+obj.bestScore+" by "+obj.name+"</h4>";
 document.body.appendChild(elem);
 return false;
 };
+// creates button asking to start again.
 var createStartAgain=function(){
     var startagain= document.createElement("div");
-    startagain.innerHTML="<div class='start-btn'><h2>Click Here to Try Again!</h2><button class='btn' id='start-game'>Start</button>";
+    startagain.innerHTML="<div class='start-btn'><h2>Click Here to Try Again!</h2><button class='btn' id='start-game' type='button'>Start</button>";
     document.body.appendChild(startagain);
     var startAgainButton = document.querySelector("#start-game");
-    startAgainButton.addEventListener("click",startGame);
+    console.log("start game button"+startAgainButton);
+    startAgainButton.addEventListener("click",restart);
 }
-
+// saves the HS to memory.
 var saveHS = function() {
     console.log("in save function");
     localStorage.setItem("HS", JSON.stringify(hs));
   };
   
-
+// loads HS if there is previous one in memory
 var loadHS = function() {
     var savedHS = localStorage.getItem("HS");
-    // if there are no tasks, set tasks to an empty array and return out of the function
+    
     if (!savedHS) {
       return false;
     }
     console.log("HS Found");
-    // else, load up saved tasks
-  
-    // parse into array of objects
+    
+    
     var saved = JSON.parse(savedHS);
     console.log("what we found in memory"+saved);
-    // loop through savedTasks array
+    
     for (var i = 0; i < saved.length; i++) {
-      // pass each task object into the `createTaskEl()` function
+      
       console.log(saved[i]);
       createHS(saved[i]);
       console.log(i+"loop of saved");
     }
   };
-/*
-testobj={
-    bestScore:3,
-    name:"George",
 
-}*/
-//createHS(testobj);
-//loadHS();
 startButton.addEventListener("click", startGame);
 //endGame();

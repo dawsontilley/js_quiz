@@ -9,3 +9,5 @@ The following site will test your knowledge of Java Script! Seeking to test your
 
  ## Author
  Dawson Tilley
+
+ ![js-quiz-preview](./assets/img/website.PNG)
