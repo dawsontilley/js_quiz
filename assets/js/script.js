@@ -1,3 +1,5 @@
+// defines initial variables
+
 var startButton = document.getElementById("start-game")
 console.log(startButton);
 var timerE1 = document.querySelector("#timer");
@@ -55,7 +57,7 @@ var Question4={
 };
 
 var Question5={
-    Q:"What can be used to add an element on to an array ",
+    Q:"What can be used to add an element on to an array? ",
     A1:"X",
     A2:"X",
     A3:"X",
@@ -66,15 +68,15 @@ var Question5={
     O4:".push",
 };
 var Question6={
-    Q:"What can be used to add an element on to an array ",
+    Q:"What is not a var type in js?",
     A1:"X",
     A2:"X",
     A3:"X",
     A4:"C",
-    O1:"insert()",
-    O2:".pop",
-    O3:".addArray",
-    O4:".push",
+    O1:"number",
+    O2:"boolean",
+    O3:"string",
+    O4:"long int",
 };
 
 var Questions = [Question1,Question2,Question3,Question4,Question5,Question6];
